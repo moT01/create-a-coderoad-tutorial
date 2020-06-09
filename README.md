@@ -1,8 +1,9 @@
-## Create your first CodeRoad tutorial
+## Create a CodeRoad tutorial
 
 Follow these instructions carefully to create your first CodeRoad tutorial.
 
 ### Prerequisites
+- npm
 - Git
 - Github
 - VS Code
@@ -20,7 +21,7 @@ Install the CodeRoad CLI tools with `npm install -g @coderoad/cli`
 node_modules
 package-lock.json
 ```
-Add anything else that may be added from your operating system such as `.DS_Store` if you are on a mac.
+Add anything else that may interfere such as `.DS_Store` if you are on a mac.
 
 ### Create the markdown
 - Create a new file in your repo named `TUTORIAL.md`.
@@ -28,6 +29,7 @@ Add anything else that may be added from your operating system such as `.DS_Stor
 This is the file that describes the structure of a tutorial. It contains all the lessons, lesson titles, descriptions, test text and all the other verbiage that will be displayed to a user. Enter this markdown into the file and save it:
 
 ```md
+
 # Introduction 
 
 This is an introduction to your tutorial. It will show up on the first page when your tutorial is started.
@@ -45,8 +47,7 @@ This is the test text. Create an `index.html` file to pass this lesson.
 #### HINTS
 
 * This is a hint to help people through the test
-* And a second hint for L1S1
-
+* Second hint for L1S1, don't worry if the hints don't show up yet
 ```
 
 The above tutorial has an introduction page and one lesson. Note that the "lessons" need to start with `## Ln` (e.g. `## L1`) and "steps", or tests, need to start with `### LnSn` (e.g. `### L1S1`).
