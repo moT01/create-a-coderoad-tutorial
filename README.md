@@ -55,16 +55,18 @@ The above tutorial has an introduction page and one lesson. Note that the "lesso
 ### Commit to github
 - Back in the terminal, add all your new files to be committed with `git add .`
 - Commit them with `git commit -m "create markdown"`
-- Push them to your repository with `git push origin master`
+- Push them to github with `git push origin master`
 
 ### Create a version branch
 - Create and checkout a new orphan branch with `git checkout --orphan v0.1.0`.
-This will make a branch that isn't create from master, so it has no commit history. It will hold the tests for your tutorial. Each test is its own commit. You can also add an optional commit for a solution to each test.
-- Check your `git status` if you need to.
-- Delete the tutorial file with `git rm TUTORIAL.md`
+This will make a branch that isn't created from master, so it has no commit history. It will hold the tests for your tutorial. Each test is its own commit. You can also add an optional commit for a solution to each test.
+- Check your `git status`.
+- Delete the tutorial file with `git rm -f TUTORIAL.md`
 
 ### Create your project files
+This branch is also where users create their projects.
 - Make a new folder named `coderoad` on your branch.
+This folder will hold as much of the CodeRoad stuff as it can so users aren't confused with extra files in their projects.
 - Go to the `coderoad` folder in your terminal and run `npm init`. Press enter until you are through the setup. 
 - Open the `package.json` file you just made and make it look like this...
 
