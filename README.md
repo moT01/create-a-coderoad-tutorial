@@ -7,8 +7,7 @@ Follow these instructions carefully to create your first CodeRoad tutorial.
 - Git
 - Github
 - VS Code
-- CodeRoad VS Code extension
-Install this in VS Code
+- CodeRoad VS Code extension (Install this in VS Code)
 - [CodeRoad CLI tools](https://www.npmjs.com/package/@coderoad/cli)
 Install the CodeRoad CLI tools with `npm install -g @coderoad/cli`
 
@@ -16,7 +15,7 @@ Install the CodeRoad CLI tools with `npm install -g @coderoad/cli`
 - Go to GitHub and create a new repository for yourself named `first-tutorial`.
 - After you click create, it takes you to the repo. Copy the URL for the repo, it should look like: `https://github.com/your-username/first-tutorial.git`.
 - Open a terminal locally and find a place to clone your repo. Enter `git clone https://github.com/your-username/first-tutorial.git` with the repo URL you copied in place of that URL to clone it.
-- Create a `.gitignore` file in your repo and add this in it:
+- Create a `.gitignore` file in your repo and add this to it:
 ```md
 node_modules
 package-lock.json
@@ -61,10 +60,10 @@ The above tutorial has an introduction page and one lesson. Note that the "lesso
 - Create and checkout a new orphan branch with `git checkout --orphan v0.1.0`.
 This will make a branch that isn't created from master, so it has no commit history. It will hold the tests for your tutorial. Each test is its own commit. You can also add an optional commit for a solution to each test.
 - Check your `git status`.
-- Delete the tutorial file with `git rm -f TUTORIAL.md`
+- Delete the tutorial file from this branch with `git rm -f TUTORIAL.md`
 
 ### Create your project files
-This branch is also where users create their projects and modify files for a tutorial, or really most things they need to do.
+This branch is also where users create their projects and modify files for a tutorial, and most anything they need to do.
 - Make a new folder named `coderoad` on your branch.
 This folder will hold as much of the CodeRoad stuff as it can so users aren't confused with extra files in their projects.
 - Go to the `coderoad` folder in your terminal and run `npm init`. Press enter until you are through the setup. 
