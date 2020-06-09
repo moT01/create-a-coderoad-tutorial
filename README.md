@@ -191,3 +191,83 @@ Success! You can see the introduction page. It may not be a bad idea to take a l
 Notice that when you click the `start` button, you can see that `npm install` is run in the `coderoad` folder and the `node_modules` are created, and your dependencies are installed.
 
 After you click start, open up any file and press `cmd+s` to save. This will run the tests. They should fail. After you check that, create the `index.html` file, and save it. The tests should run and pass this time :smile:
+
+Keep this VS Code window open and go back to your other one.
+
+### Add a second lesson
+Your tutorial probably needs more than one lesson.
+- Go back to the markdown file and add this at the bottom:
+
+```md
+## L2 Add DOCTYPE
+
+> Add a DOCTYPE to an HTML file
+
+HTML files should have a `DOCTYPE`. You can add one at the top of the `index.html` file like this: `<!DOCTYPE html>`.
+
+### L2S1
+
+Add the DOCTYPE
+
+#### HINTS
+
+* Add `<!DOCTYPE html>` at the top of `index.html` and save the file
+```
+
+- Add all the files to be committed
+- Commit the files with any message
+- Push the changes to github
+
+### Add second lesson test
+- Checkout your version branch again
+- Add a new test to your `.test` file, it can look like this:
+
+```js
+const indexFile = fs.readFileSync(path.resolve(__dirname, '../../index.html'), 'utf8');
+
+describe("index.html", () => {
+	it('should have a DOCTYPE', () => {
+		assert(/<!doctype html>/i.test(indexFile));
+	});
+});
+```
+
+That should check for the doctype. 
+- Run the test to make sure it fails (`npm run programmatic-test` from the `coderoad` folder)
+- It failed, go add the doctype to the index.html file
+- Run the test again to see if it passed after adding. It should.
+
+### Commit second test
+- Add **only** the `.test` file to git to be committed.
+- Commit it with a message of "L2S1Q"
+- Add the `index.html` file to be committed
+- Commit it with a message of "L2S1A"
+- Push your changes to github on your `v0.1.0` branch
+
+### Update the YAML
+You added another lesson in the markdown, and the tests for it. Just need to update the YAML
+- Go back to the master branch
+- Add this at the bottom of the `.yaml` file, make sure the indentation is perfect:
+
+```yml
+  - id: L2
+    steps:
+      - id: L2S1
+        setup:
+          commands:
+            - npm install
+```
+
+- Add, Commit, and Push your changes
+
+### Rebuild
+- Run `coderoad build` again on your master branch (cross your fingers).
+
+### Restart the tutorial
+- Go back to your CodeRoad tutorial if its still open
+- In order to start over, close CodeRoad
+- Delete All the files from the workspace, but leave the top level folder there
+- Start CodeRoad back up
+- Start a new tutorial, and use the `tutorial.json` file you just created.
+You should have two lessons to go through now :smile:
+
