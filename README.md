@@ -64,7 +64,7 @@ This will make a branch that isn't created from master, so it has no commit hist
 - Delete the tutorial file with `git rm -f TUTORIAL.md`
 
 ### Create your project files
-This branch is also where users create their projects.
+This branch is also where users create their projects and modify files for a tutorial, or really most things they need to do.
 - Make a new folder named `coderoad` on your branch.
 This folder will hold as much of the CodeRoad stuff as it can so users aren't confused with extra files in their projects.
 - Go to the `coderoad` folder in your terminal and run `npm init`. Press enter until you are through the setup. 
