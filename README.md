@@ -99,14 +99,14 @@ const path = require('path');
 
 const readdir = util.promisify(fs.readdir);
 const getRootDir = async (dir = process.cwd()) => {
-	const pathToRoot = path.join(dir, '..');
-	const rootDir = await readdir(pathToRoot);
+  const pathToRoot = path.join(dir, '..');
+  const rootDir = await readdir(pathToRoot);
 
   if (!rootDir) {
     throw new Error(`Could not find folder ${pathToRoot}`);
   }
 
-	return rootDir;
+  return rootDir;
 }
 
 describe("first-tutorial folder", () => {
@@ -116,7 +116,7 @@ describe("first-tutorial folder", () => {
   });
 
   it('should have an index.html file', async () => {
-		assert(rootDir.indexOf('index.html') >= 0)
+    assert(rootDir.indexOf('index.html') >= 0)
   });
 });
 ```
@@ -168,11 +168,6 @@ levels:
   - id: L1
     steps:
       - id: L1S1
-        setup:
-          subtasks: false
-  - id: L2
-    steps:
-      - id: L2S1
         setup:
           subtasks: false
 ```
@@ -243,13 +238,13 @@ Add the DOCTYPE
 ```js
 const readFile = util.promisify(fs.readFile);
 const getIndexFile = async (dir = process.cwd()) => {
-	const pathToIndex = path.join(dir, '..', 'index.html');
-	const indexFile = await readFile(pathToIndex);
+  const pathToIndex = path.join(dir, '..', 'index.html');
+  const indexFile = await readFile(pathToIndex);
 
   if (!indexFile) {
     throw new Error(`Could not find ${pathToIndex}`);
   }
-	return indexFile;
+  return indexFile;
 }
 
 describe("index.html", () => {
@@ -258,9 +253,9 @@ describe("index.html", () => {
     indexFile = await getIndexFile();
   });
 
-	it('should have a DOCTYPE', () => {
-		assert(/<!doctype html>/i.test(indexFile));
-	});
+  it('should have a DOCTYPE', () => {
+    assert(/<!doctype html>/i.test(indexFile));
+  });
 });
 ```
 
@@ -289,7 +284,8 @@ You added another lesson in the markdown, and the tests for it. Just need to upd
     steps:
       - id: L2S1
         setup:
-          subtasts: false
+          files:
+            - index.html
 ```
 
 - Add, Commit, and Push your changes
