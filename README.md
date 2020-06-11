@@ -2,18 +2,10 @@
 
 Follow these instructions carefully to create your first CodeRoad tutorial.
 
-### Prerequisites
-- npm
-- Git
-- Github
-- VS Code
-- CodeRoad VS Code extension (Install this in VS Code)
-- [CodeRoad CLI tools](https://www.npmjs.com/package/@coderoad/cli) (Install the CodeRoad CLI tools with `npm install -g @coderoad/cli`)
-
 ### Create a repo
-- Go to GitHub and create a new repository for yourself named `first-tutorial`.
-- After you click create, it takes you to the repo. Copy the URL for the repo, it should look like: `https://github.com/your-username/first-tutorial.git`.
-- Open a terminal locally and find a place to clone your repo. Enter `git clone https://github.com/your-username/first-tutorial.git` with the repo URL you copied in place of that URL to clone it.
+- Go to GitHub and create a new repository for yourself named `first-tutorial`
+- After you click create, it takes you to the repo. Copy the URL for the repo, it should look like: `https://github.com/your-username/first-tutorial.git`
+- Open a terminal locally and find a place to clone your repo. Enter `git clone https://github.com/your-username/first-tutorial.git` with the repo URL you copied in place of that URL to clone it
 - Create a `.gitignore` file in your repo and add this to it:
 ```md
 node_modules
@@ -47,7 +39,7 @@ This is the test text. Create an `index.html` file to pass this lesson.
 * Second hint for L1S1, don't worry if the hints don't show up yet
 ```
 
-The above tutorial has an introduction page and one lesson. Note that the "lessons" need to start with `## Ln` (e.g. `## L1`) and "steps", or tests, need to start with `### LnSn` (e.g. `### L1S1`).
+The above tutorial has an introduction page and one lesson.
 
 ### Commit to github
 - Back in the terminal, add all your new files to be committed with `git add .`
@@ -58,11 +50,11 @@ The above tutorial has an introduction page and one lesson. Note that the "lesso
 - Create and checkout a new orphan branch with `git checkout --orphan v0.1.0`.
 
 This will make a branch that isn't created from master, so it has no commit history. It will hold the tests for your tutorial. Each test is its own commit. You can also add an optional commit for a solution to each test.
-- Check your `git status`.
+- Check your `git status`
 - Delete the tutorial file from this branch with `git rm -f TUTORIAL.md`
 
 ### Create your project files
-This branch is also where users create their projects and modify files for a tutorial, and most anything they need to do.
+This branch is also where users create their projects, modify files for a tutorial, and most anything they need to do.
 - Make a new folder named `coderoad` on your branch.
 
 This folder will hold as much of the CodeRoad stuff as it can so users aren't confused with extra files in their projects.
@@ -102,13 +94,29 @@ The message of `INIT` in all caps is necessary. This message is used to add proj
 ```js
 const assert = require('assert');
 const fs = require('fs');
+const util = require('util');
 const path = require('path');
 
-const filesInDir = fs.readdirSync(path.resolve(__dirname, '../..'), 'utf8');
+const readdir = util.promisify(fs.readdir);
+const getRootDir = async (dir = process.cwd()) => {
+	const pathToRoot = path.join(dir, '..');
+	const rootDir = await readdir(pathToRoot);
+
+  if (!rootDir) {
+    throw new Error(`Could not find folder ${pathToRoot}`);
+  }
+
+	return rootDir;
+}
 
 describe("first-tutorial folder", () => {
+  let rootDir;
+  before(async () => {
+    rootDir = await getRootDir();
+  });
+
   it('should have an index.html file', async () => {
-    assert(filesInDir.indexOf('index.html') >= 0)
+		assert(rootDir.indexOf('index.html') >= 0)
   });
 });
 ```
@@ -143,16 +151,15 @@ You can think of these two branches like separate repositories, the branches wil
 version: '0.1.0'
 config:
   testRunner:
-    command: npm run programmatic-test
+    command: ./node_modules/.bin/mocha
     args:
-      filter: --grep
       tap: --reporter=mocha-tap-reporter
     setup:
       commands:
         - npm install
     directory: coderoad
   repo: 
-    uri: https://github.com/moT01/first-repo
+    uri: https://github.com/moT01/first-tut
     branch: v0.1.0
   dependencies:
     - name: node
@@ -162,11 +169,15 @@ levels:
     steps:
       - id: L1S1
         setup:
-          commands:
-            - npm install
+          subtasks: false
+  - id: L2
+    steps:
+      - id: L2S1
+        setup:
+          subtasks: false
 ```
 
-Replace the `repo uri` URL with your github repo, note that it's just the username and repo in the URL. This file links everything together. You can see the repo URL and the branch that you created. And the `L1` and `L1S1` id's that match the markdown. You can also add commands that will run when a lesson is started, as well as a host of other things. You can [find out more here](https://github.com/coderoad/coderoad-cli/blob/master/src/templates/js-mocha/coderoad.yaml).
+Replace the `repo uri` URL with your github repo, note that it's just the username and repo in the URL. This file links everything together. You can see the repo URL and the branch that you created. And the `L1` and `L1S1` id's that match the markdown. You can also add commands that will run when a lesson is started, as well as a host of other things.
 
 - Add this with `git add .`
 - Commit it with `git commit -m "create yaml"`
@@ -227,15 +238,29 @@ Add the DOCTYPE
 
 ### Add second lesson test
 - Checkout your version branch again
-- Add a new test to your `.test` file, it can look like this:
+- Add a new test to your `.test` file below the other one, it can look like this:
 
 ```js
-const indexFile = fs.readFileSync(path.resolve(__dirname, '../../index.html'), 'utf8');
+const readFile = util.promisify(fs.readFile);
+const getIndexFile = async (dir = process.cwd()) => {
+	const pathToIndex = path.join(dir, '..', 'index.html');
+	const indexFile = await readFile(pathToIndex);
+
+  if (!indexFile) {
+    throw new Error(`Could not find ${pathToIndex}`);
+  }
+	return indexFile;
+}
 
 describe("index.html", () => {
-  it('should have a DOCTYPE', () => {
-    assert(/<!doctype html>/i.test(indexFile));
+  let indexFile;
+  before(async () => {
+    indexFile = await getIndexFile();
   });
+
+	it('should have a DOCTYPE', () => {
+		assert(/<!doctype html>/i.test(indexFile));
+	});
 });
 ```
 
@@ -264,8 +289,7 @@ You added another lesson in the markdown, and the tests for it. Just need to upd
     steps:
       - id: L2S1
         setup:
-          commands:
-            - npm install
+          subtasts: false
 ```
 
 - Add, Commit, and Push your changes
@@ -281,4 +305,3 @@ You added another lesson in the markdown, and the tests for it. Just need to upd
 - Start a new tutorial using the `tutorial.json` file you just created.
 
 You should have two lessons to go through now :smile:
-
